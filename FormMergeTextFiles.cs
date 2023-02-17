@@ -1,11 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/* ********************************************************************
+ * Projct:      Merge Files
+ * File:        FormMergeTextFiles.cs
+ * Language:    C#
+ * 
+ * Desription:  This project will merge two user selected files into a
+ *              single user selected output file
+ *              
+ * College:     Husson University
+ * Course:      IT 325
+ * 
+ * Edit History:
+ * Ver   Who Date       Notes
+ * ----- --- ---------- -----------------------------------------------
+ * 0.1   KMC 2/13/2023  - added all the buttons necessary to open files
+ *                      - imported select file routine from previous prj.
+ * 0.2   KMC 2/16/2023  - fixed UI design                     
+ * *******************************************************************/
+using System;
 using System.Windows.Forms;
 
 namespace KMCMergeFilesApp
@@ -16,6 +27,10 @@ namespace KMCMergeFilesApp
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// This method selects the user selected file from the windows explorer 
+        /// </summary>
+        /// <returns>file path</returns>
         public string SelectFile()
         {
             String filePath = String.Empty;
@@ -51,25 +66,58 @@ namespace KMCMergeFilesApp
 
         }
 
+        /// <summary>
+        /// This button lets the user select 3 files, first file to merge, second file to merge
+        /// and the output file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonMerge_Click(object sender, EventArgs e)
         {
-            String userInputFile1;
-            userInputFile1 = SelectFile();
+            try
+            {
+                // user selects first file
+                String userInputFile1;
+                MessageBox.Show("Please select your first file to merge.");
+                userInputFile1 = SelectFile();
+                listBoxInputFile1.Items.Add(userInputFile1);
 
-            String userInputFile2;
-            userInputFile2 = SelectFile();
+                // user selects second file
+                String userInputFile2;
+                MessageBox.Show("Please select your second file to merge.");
+                userInputFile2 = SelectFile();
+                listBoxInputFile2.Items.Add(userInputFile2);
 
-            String userOutputFile;
-            userOutputFile = SelectFile();
+                // user selects third and final output file
+                String userOutputFile;
+                MessageBox.Show("Please select your output file for the merged files.");
+                userOutputFile = SelectFile();
+                listBoxOutput.Items.Add(userOutputFile);
 
-            KMCMergeFiles.MergeFiles(userInputFile1, userInputFile2, userOutputFile);
+                // merge the files
+                KMCMergeFiles.MergeFiles(userInputFile1, userInputFile2, userOutputFile);
+            }
+            catch (Exception)
+            {
+
+                // if no file is selected, ask for a file, and clear the listbox
+                MessageBox.Show("Select two .txt files to merge, with a .txt output file.");
+                listBoxInputFile1.Items.Clear();
+                listBoxInputFile2.Items.Clear();
+                listBoxOutput.Items.Clear();
+
+            }
         }
+
+
+
+        // I was going to do three buttons, but it is easier / faster testing wise and UI wise to do one
         private void buttonSelectFileOne_Click(object sender, EventArgs e)
         {
             String userInputFile1;
             userInputFile1 = SelectFile();
         }
-        
+
 
         private void buttonSelectFileTwo_Click(object sender, EventArgs e)
         {

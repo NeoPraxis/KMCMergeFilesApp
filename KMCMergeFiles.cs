@@ -43,12 +43,6 @@ namespace KMCMergeFilesApp
     internal class KMCMergeFiles
     {
 
-        #region properties
-        #endregion properties
-
-        #region data
-        #endregion data
-
         #region methods
         /// <summary>
         /// This method merges two user selected files and outputs them into a user selected output file
